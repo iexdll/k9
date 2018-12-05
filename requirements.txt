@@ -1,0 +1,3 @@
+uwsgi==2.0.17
+django==2.1.4
+djangorestframework==3.9.0
