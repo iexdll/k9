@@ -42,3 +42,22 @@ class DogAPITestCase(TestCase):
         created = json.loads(response.content)
         self.assertTrue(created)
         self.assertTrue(Dog.objects.filter(uuid=created['uuid']).exists())
+
+    def test_get_dog(self):
+        response = self.client.get('/dog/{0}/'.format(self.hachiko_uuid))
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_dog(self):
+        breed_uuid = Breed.objects.create(name='Akita-inu').uuid
+        response = self.client.patch(
+            '/dog/{0}/'.format(self.hachiko_uuid),
+            '{{"name": "{0}"}}'.format("test"),
+            content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        updated = Dog.objects.get(uuid=self.hachiko_uuid)
+        self.assertEqual(updated.breed.pk, breed_uuid)
+
+    def test_delete_dog(self):
+        response = self.client.delete('/dog/{0}/'.format(self.hachiko_uuid))
+        self.assertEqual(response.status_code, 204)
+        self.assertFalse(Dog.objects.filter(uuid=self.hachiko_uuid).exists())
