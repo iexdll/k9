@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from breeds.views import BreedCreateView, BreedRUDView, BreedListView
-from dogs.views import DogCreateView, DogRUDView
+from dogs.views import DogCreateView, DogRUDView, DogListView
 
 urlpatterns = [
     path('breed/', BreedCreateView.as_view()),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('breeds/', BreedListView.as_view()),
     path('dog/', DogCreateView.as_view()),
     path('dog/<uuid:pk>/', DogRUDView.as_view()),
+    path('dogs/', DogListView.as_view()),
 ]
