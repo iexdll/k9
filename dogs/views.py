@@ -22,5 +22,11 @@ class DogCreateView(CreateAPIView):
 
 
 class DogListView(ListAPIView):
-    queryset = Dog.objects.get_queryset()
     serializer_class = DogSerializer
+
+    def get_queryset(self):
+        queryset = Dog.objects.get_queryset()
+        name = self.request.query_params.get('name', None)
+        if name is not None:
+            queryset = queryset.filter(name=name)
+        return queryset
