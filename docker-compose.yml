@@ -16,7 +16,7 @@ services:
       - './:/app/'
     depends_on:
       - postgres
-  uwsgi:
+  app:
     build:
       context: .
     depends_on:
@@ -27,5 +27,13 @@ services:
     entrypoint: uwsgi --http :9090 --wsgi-file k9service/wsgi.py
     ports:
       - '80:9090'
+  test:
+    build:
+      context: .
+    depends_on:
+      - postgres
+    volumes:
+      - './:/app/'
+    entrypoint: python3 manage.py test
 volumes:
   k9db:

@@ -2,7 +2,7 @@
 A kanine info service
 
 ## How-to run
-> docker-compose up
+> docker-compose up app
 
 Service will run on localhost's 80 port
 
@@ -14,7 +14,7 @@ Create breed with
 >
 > {name: "Akita"} 
 
-Service will respond with created breed automatically assigning it unique id 
+Service will respond with created breed, automatically assigning it unique id 
 
 Get breed by id
 > GET /breed/id/
@@ -27,7 +27,7 @@ Update breed with specified fields
 To delete breed
 > DELETE /breed/id/
 
-If there are dogs of this breed service will respond with status 424
+If there are dogs of this breed, than service will respond with status 424
 
 To get all breeds 
 > GET /breeds/
@@ -38,7 +38,7 @@ Create dog with
 >
 > {name: "Hachi-ko", breed: "breed_id"}
 
-Service will respond with created dog automatically assigning it unique id 
+Service will respond with created dog, automatically assigning it unique id 
 
 Get dog by id
 > GET /dog/id/
@@ -58,4 +58,4 @@ To find dog by it's name
 > GET /dogs/?name=Hachi-ko
 
 ## Run tests
-> docker-compose exec uwsgi python3 manage.py test  
+> docker-compose up test  
