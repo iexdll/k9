@@ -1,5 +1,5 @@
 import json
-from django.test import TestCase, Client
+from django.test import TestCase
 from breeds.models import Breed
 
 class BreedsModelsTestCase(TestCase):
@@ -34,27 +34,24 @@ class BreedAPITestCase(TestCase):
         cls.akita_uuid = Breed.objects.create(name='Akita').uuid
         cls.bulldog_uuid = Breed.objects.create(name='Bulldog').uuid
 
-    def setUp(self):
-        self.client = Client()
-
     def test_post_breed(self):
-        response = self.client.post('/breed/', data="{name: 'Poodle'}")
-        self.assertEqual(response, 200)
-        created = json.loads(response.body)
+        response = self.client.post('/breed/', data='{"name": "Poodle"}', content_type="application/json")
+        self.assertEqual(response.status_code, 201)
+        created = json.loads(response.content)
         self.assertTrue(created)
         self.assertTrue(Breed.objects.filter(uuid=created['uuid']).exists())
 
     def test_get_breed(self):
-        response = self.client.get('/breed/%s/'.format(self.akita_uuid))
-        self.assertEqual(response, 200)
+        response = self.client.get('/breed/{0}/'.format(self.akita_uuid))
+        self.assertEqual(response.status_code, 200, "Can't get breed /breed/{0}/".format(self.akita_uuid))
 
     def test_update_breed(self):
-        response = self.client.patch('/breed/%s/'.format(self.akita_uuid), "{name: 'Akita-inu'}")
+        response = self.client.patch('/breed/{0}/'.format(self.akita_uuid), '{"name": "Akita-inu"}', content_type="application/json")
         self.assertEqual(response.status_code, 200)
         updated = Breed.objects.get(uuid=self.akita_uuid)
         self.assertEqual(updated.name, 'Akita-inu')
 
     def test_delete_breed(self):
-        response = self.client.delete('/breed/%s/'.format(self.akita_uuid))
-        self.assertEqual(response.status_code, 200)
-        self.assertFalse(Breed.objects.find(uuid=self.akita_uuid).exists())
+        response = self.client.delete('/breed/{0}/'.format(self.akita_uuid))
+        self.assertEqual(response.status_code, 204)
+        self.assertFalse(Breed.objects.filter(uuid=self.akita_uuid).exists())
