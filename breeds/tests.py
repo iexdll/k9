@@ -66,3 +66,10 @@ class BreedAPITestCase(TestCase):
         Dog.objects.create(name='Hachi-ko', breed=Breed.objects.get(uuid=self.akita_uuid))
         response = self.client.delete('/breed/{0}/'.format(self.akita_uuid))
         self.assertEqual(response.status_code, 424)
+
+    def test_get_all_breeds(self):
+        response = self.client.get('/breeds/')
+        self.assertEqual(response.status_code, 200)
+        breeds_list = json.loads(response.content)
+        self.assertEqual(len(breeds_list), 2)
+        self.assertTrue(breeds_list[0])
