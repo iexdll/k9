@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.urls import path
 from breeds.views import BreedCreateView, BreedRUDView
-from dogs.views import DogCreateView
+from dogs.views import DogCreateView, DogRUDView
 
 urlpatterns = [
     path('breed/', BreedCreateView.as_view()),
     path('breed/<uuid:pk>/', BreedRUDView.as_view()),
     path('dog/', DogCreateView.as_view()),
+    path('dog/<uuid:pk>/', DogRUDView.as_view()),
 ]
