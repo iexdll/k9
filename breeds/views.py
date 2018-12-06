@@ -1,6 +1,6 @@
 from rest_framework import serializers, status
 from rest_framework.exceptions import APIException
-from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, CreateAPIView, ListAPIView
 from .models import Breed
 from django.db.models.deletion import ProtectedError
 
@@ -29,5 +29,10 @@ class BreedRUDView(RetrieveUpdateDestroyAPIView):
 
 
 class BreedCreateView(CreateAPIView):
+    queryset = Breed.objects.get_queryset()
+    serializer_class = BreedSerializer
+
+
+class BreedListView(ListAPIView):
     queryset = Breed.objects.get_queryset()
     serializer_class = BreedSerializer
