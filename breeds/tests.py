@@ -1,6 +1,8 @@
 import json
 from django.test import TestCase
 from breeds.models import Breed
+from dogs.models import Dog
+from django.db.models.deletion import ProtectedError
 
 class BreedsModelsTestCase(TestCase):
     @classmethod
@@ -26,6 +28,10 @@ class BreedsModelsTestCase(TestCase):
     def test_breed_delete(self):
         Breed.objects.filter(uuid=self.akita_uuid).delete()
         self.assertFalse(Breed.objects.exists())
+
+    def test_we_cant_delete_referenced_breed(self):
+        Dog.objects.create(name='Hachi-ko', breed=Breed.objects.get(uuid=self.akita_uuid))
+        self.assertRaises(ProtectedError, Breed.objects.filter(uuid=self.akita_uuid).delete)
 
 
 class BreedAPITestCase(TestCase):
@@ -55,3 +61,8 @@ class BreedAPITestCase(TestCase):
         response = self.client.delete('/breed/{0}/'.format(self.akita_uuid))
         self.assertEqual(response.status_code, 204)
         self.assertFalse(Breed.objects.filter(uuid=self.akita_uuid).exists())
+
+    def test_api_deletion_of_referenced_breed(self):
+        Dog.objects.create(name='Hachi-ko', breed=Breed.objects.get(uuid=self.akita_uuid))
+        response = self.client.delete('/breed/{0}/'.format(self.akita_uuid))
+        self.assertEqual(response.status_code, 424)
