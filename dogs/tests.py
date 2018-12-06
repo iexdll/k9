@@ -70,3 +70,10 @@ class DogAPITestCase(TestCase):
         dogs_list = json.loads(response.content)
         self.assertEqual(len(dogs_list), 2)
         self.assertTrue(dogs_list[0])
+
+    def test_get_dog_by_name(self):
+        response = self.client.get('/dogs/?name=Hachi-ko')
+        self.assertEqual(response.status_code, 200)
+        dogs_list = json.loads(response.content)
+        self.assertEqual(len(dogs_list), 1)
+        self.assertEqual(dogs_list[0]['name'], "Hachi-ko")
