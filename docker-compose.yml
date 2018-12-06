@@ -8,10 +8,20 @@ services:
       POSTGRES_PASSWORD: '6j@{)u_(/4^x:8M@'
     volumes:
       - "k9db:/var/lib/postgresql/data"
+  migration:
+    build:
+      context: .
+    entrypoint: python3 manage.py migrate --noinput
+    volumes:
+      - './:/app/'
+    depends_on:
+      - postgres
   uwsgi:
-    image: svich/k9
-    links:
-      - 'postgres'
+    build:
+      context: .
+    depends_on:
+      - postgres
+      - migration
     volumes:
       - './:/app/'
     entrypoint: uwsgi --http :9090 --wsgi-file k9service/wsgi.py
