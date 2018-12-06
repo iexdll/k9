@@ -14,5 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from breeds.views import BreedCreateView, BreedRUDView
 
-urlpatterns = []
+urlpatterns = [
+    path('breed/', BreedCreateView.as_view()),
+    path('breed/<uuid:pk>/', BreedRUDView.as_view()),
+]
