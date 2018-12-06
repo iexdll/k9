@@ -1,3 +1,4 @@
+import json
 from django.test import TestCase
 from breeds.models import Breed
 from dogs.models import Dog
@@ -27,3 +28,17 @@ class DogsModelsTestCase(TestCase):
     def test_dog_delete(self):
         Dog.objects.filter(uuid=self.hachiko_uuid).delete()
         self.assertFalse(Dog.objects.filter(uuid=self.hachiko_uuid).exists()) # ;_;
+
+
+class DogAPITestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        akita_inu = Breed.objects.create(name='Akita-inu')
+        cls.hachiko_uuid = Dog.objects.create(name='Hachi-ko', breed=akita_inu).uuid
+
+    def test_post_dog(self):
+        response = self.client.post('/dog/', data='{"name": "Rex"}', content_type="application/json")
+        self.assertEqual(response.status_code, 201)
+        created = json.loads(response.content)
+        self.assertTrue(created)
+        self.assertTrue(Dog.objects.filter(uuid=created['uuid']).exists())
