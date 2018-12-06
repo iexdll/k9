@@ -51,7 +51,7 @@ class DogAPITestCase(TestCase):
         breed_uuid = Breed.objects.create(name='Akita-inu').uuid
         response = self.client.patch(
             '/dog/{0}/'.format(self.hachiko_uuid),
-            '{{"name": "{0}"}}'.format("test"),
+            '{{"breed": "{0}"}}'.format(breed_uuid),
             content_type="application/json")
         self.assertEqual(response.status_code, 200)
         updated = Dog.objects.get(uuid=self.hachiko_uuid)
