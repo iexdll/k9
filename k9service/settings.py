@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
+    'rest_framework',
+    'breeds',
+    'dogs',
 ]
 
 MIDDLEWARE = [
@@ -39,6 +42,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'k9service.urls'
 
 TEMPLATES = []
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 WSGI_APPLICATION = 'k9service.wsgi.application'
 
