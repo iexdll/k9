@@ -19,6 +19,8 @@ services:
   app:
     build:
       context: .
+    environment:
+      DEBUG: 'True'
     depends_on:
       - postgres
       - migration
