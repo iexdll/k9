@@ -51,6 +51,7 @@ class DogAPITestCase(TestCase):
 
     def test_update_dog(self):
         breed_uuid = Breed.objects.create(name='Akita-inu').uuid
+        existing_dog = Dog.objects.get(uuid=self.hachiko_uuid)
         response = self.client.patch(
             '/dog/{0}/'.format(self.hachiko_uuid),
             '{{"breed": "{0}"}}'.format(breed_uuid),
@@ -58,6 +59,7 @@ class DogAPITestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         updated = Dog.objects.get(uuid=self.hachiko_uuid)
         self.assertEqual(updated.breed.pk, breed_uuid)
+        self.assertEqual(updated.name, existing_dog.name)
 
     def test_delete_dog(self):
         response = self.client.delete('/dog/{0}/'.format(self.hachiko_uuid))
