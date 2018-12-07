@@ -27,7 +27,7 @@ Update breed with specified fields
 Delete breed
 > DELETE /breed/id/
 
-If there are dogs of this breed, than service will respond with status 424
+If there are dogs of this breed, than breed will not be deleted, service will respond with status 424
 
 Get all breeds 
 > GET /breeds/
