@@ -12,7 +12,7 @@ Service will run on localhost's 80 port
 Create breed with 
 > POST /breed/
 >
-> {name: "Akita"} 
+> {"name": "Akita"} 
 
 Service will respond with created breed, automatically assigning it unique id 
 
@@ -22,7 +22,7 @@ Get breed by id
 Update breed with specified fields
 > PATCH /breed/id/
 >
-> {name: "Akita-inu"}
+> {"name": "Akita-inu"}
 
 To delete breed
 > DELETE /breed/id/
@@ -36,7 +36,7 @@ To get all breeds
 Create dog with 
 > POST /dog/
 >
-> {name: "Hachi-ko", breed: "breed_id"}
+> {"name": "Hachi-ko", "breed": "breed_id"}
 
 Service will respond with created dog, automatically assigning it unique id 
 
@@ -46,7 +46,7 @@ Get dog by id
 Update dog with specified fields
 > PATCH /dog/id/
 >
-> {breed: "new_breed_id"}
+> {"breed": "new_breed_id"}
 
 To delete dog
 > DELETE /dog/id/
