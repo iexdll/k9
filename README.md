@@ -8,7 +8,7 @@ Service will run on localhost's 80 port
 
 ## How to use
 
-### Breeds of Dog service
+### Breeds of Dog API
 Create breed with 
 > POST /breed/
 >
@@ -24,15 +24,15 @@ Update breed with specified fields
 >
 > {"name": "Akita-inu"}
 
-To delete breed
+Delete breed
 > DELETE /breed/id/
 
 If there are dogs of this breed, than service will respond with status 424
 
-To get all breeds 
+Get all breeds 
 > GET /breeds/
 
-### Dogs service
+### Dogs API
 Create dog with 
 > POST /dog/
 >
@@ -48,13 +48,13 @@ Update dog with specified fields
 >
 > {"breed": "new_breed_id"}
 
-To delete dog
+Delete dog
 > DELETE /dog/id/
 
-To get all dogs 
+Get all dogs 
 >GET /dogs/
 
-To find dog by it's name 
+Find dog by it's name 
 > GET /dogs/?name=Hachi-ko
 
 ## Run tests
